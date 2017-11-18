@@ -6,7 +6,6 @@ import org.antlr.v4.runtime.CommonTokenStream;
 
 import com.expr.brule.core.BusinessRuleParser.BinopContext;
 import com.expr.brule.core.BusinessRuleParser.CompopContext;
-import com.expr.brule.core.BusinessRuleParser.ExprContext;
 
 public class BaseReplaceEditor extends BaseRuleEditor {
 

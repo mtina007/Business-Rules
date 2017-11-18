@@ -9,7 +9,10 @@ import java.io.StringReader;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.TokenStreamRewriter;
+import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
+import com.expr.brule.core.BusinessRuleBaseListener;
 import com.expr.brule.core.BusinessRuleLexer;
 import com.expr.brule.core.BusinessRuleParser;
 import com.expr.brule.core.BusinessRuleParser.ParseContext;
@@ -18,11 +21,13 @@ import com.expr.brule.core.BusinessRuleParser.ParseContext;
  * @author ssdImmanuel
  *
  */
-public class ParseWrapper {
+public class ParseWrapper extends BusinessRuleBaseListener{
 
 	/**
 	 * 
 	 */
+	protected TokenStreamRewriter rw;
+	
 	private String rule;
 	public ParseWrapper(String rule) {
 		this.rule = rule;
@@ -34,7 +39,16 @@ public class ParseWrapper {
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
 		BusinessRuleParser parser = new BusinessRuleParser(tokens);
 		
+		rw = new TokenStreamRewriter(tokens);
+		
 		ParseContext ctx = parser.parse();
+		
+		ParseTreeWalker.DEFAULT.walk(this, ctx);
+		
+	}
+	
+	public String getLatestRule() {
+		return rw.getText();
 	}
 
 }
