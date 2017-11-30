@@ -1,19 +1,28 @@
 package com.expr.brule.newtests;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.expr.brule.edits.MultiRuleEditor;
 import com.expr.brule.edits.RuleVariableEditor;
 
-public class ReplaceTest2 {
+public class ReplaceTest3 {
 
 	public static void main(String[] args) {
 		String rule = "( ( ( AMOUNT > 200000.00) AND ( IND1 = Y) ) or ( ind1 = Y ) )";
+		String rule1= "AMOUNT = 1010.00";
 		
-		System.out.println("Input rule: "+rule);
+		ArrayList rules = new ArrayList<String>();
+		rules.add(rule);
+		rules.add(rule1);
 		
-		/*HashMap rmap = new HashMap();
-		rmap.put("AMOUNT", "CASH");*/
+		MultiRuleEditor multi = new MultiRuleEditor(rules, "AMOUNT", "CASH");
+		try {
+			multi.run();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
 		
 		RuleVariableEditor exp = new RuleVariableEditor(rule, "AMOUNT", "CASH");
 		
@@ -22,7 +31,6 @@ public class ReplaceTest2 {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println("Edited rule: "+exp.getLatestRule());
 
 	}
 
