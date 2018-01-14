@@ -10,13 +10,13 @@ parse
 
 
 expr
- : expr binop expr 
+ : expr binop expr  
  | lhs=VARIABLE compop rhs=VARIABLE 
  | lhs=VARIABLE compop rhs=STRING 
  | TRUE         
  | FALSE        
- | VARIABLE 
- | startofexpr expr endofexpr
+ | VARIABLE     
+ | LEFTPAREN expr RIGHTPAREN 
  
  ;
 
@@ -36,11 +36,11 @@ TRUE:
 FALSE:
          'false' | 'FALSE';
 STRING:
-          '"'   ~[\t\n\r]* '"' 
+          '"'   ~[\t\n\r\"]* '"' 
      ;
      
-     startofexpr:	LEFTPAREN;
-     endofexpr:		RIGHTPAREN;
+     //startofexpr:	LEFTPAREN;
+     //endofexpr:		RIGHTPAREN;
 
 LEFTPAREN:	'(';   
 RIGHTPAREN:	')';  

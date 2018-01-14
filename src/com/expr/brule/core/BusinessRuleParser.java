@@ -20,10 +20,9 @@ public class BusinessRuleParser extends Parser {
 		TRUE=1, FALSE=2, STRING=3, LEFTPAREN=4, RIGHTPAREN=5, EQUAL=6, LT=7, GT=8, 
 		LTE=9, GTE=10, NE=11, AND=12, OR=13, VARIABLE=14, SPACE=15;
 	public static final int
-		RULE_parse = 0, RULE_expr = 1, RULE_binop = 2, RULE_compop = 3, RULE_startofexpr = 4, 
-		RULE_endofexpr = 5;
+		RULE_parse = 0, RULE_expr = 1, RULE_binop = 2, RULE_compop = 3;
 	public static final String[] ruleNames = {
-		"parse", "expr", "binop", "compop", "startofexpr", "endofexpr"
+		"parse", "expr", "binop", "compop"
 	};
 
 	private static final String[] _LITERAL_NAMES = {
@@ -112,9 +111,9 @@ public class BusinessRuleParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(12);
+			setState(8);
 			expr(0);
-			setState(13);
+			setState(9);
 			match(EOF);
 			}
 		}
@@ -142,18 +141,14 @@ public class BusinessRuleParser extends Parser {
 		public TerminalNode STRING() { return getToken(BusinessRuleParser.STRING, 0); }
 		public TerminalNode TRUE() { return getToken(BusinessRuleParser.TRUE, 0); }
 		public TerminalNode FALSE() { return getToken(BusinessRuleParser.FALSE, 0); }
-		public StartofexprContext startofexpr() {
-			return getRuleContext(StartofexprContext.class,0);
-		}
+		public TerminalNode LEFTPAREN() { return getToken(BusinessRuleParser.LEFTPAREN, 0); }
 		public List<ExprContext> expr() {
 			return getRuleContexts(ExprContext.class);
 		}
 		public ExprContext expr(int i) {
 			return getRuleContext(ExprContext.class,i);
 		}
-		public EndofexprContext endofexpr() {
-			return getRuleContext(EndofexprContext.class,0);
-		}
+		public TerminalNode RIGHTPAREN() { return getToken(BusinessRuleParser.RIGHTPAREN, 0); }
 		public BinopContext binop() {
 			return getRuleContext(BinopContext.class,0);
 		}
@@ -191,60 +186,60 @@ public class BusinessRuleParser extends Parser {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(31);
+			setState(27);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,0,_ctx) ) {
 			case 1:
+				{
+				setState(12);
+				((ExprContext)_localctx).lhs = match(VARIABLE);
+				setState(13);
+				compop();
+				setState(14);
+				((ExprContext)_localctx).rhs = match(VARIABLE);
+				}
+				break;
+			case 2:
 				{
 				setState(16);
 				((ExprContext)_localctx).lhs = match(VARIABLE);
 				setState(17);
 				compop();
 				setState(18);
-				((ExprContext)_localctx).rhs = match(VARIABLE);
-				}
-				break;
-			case 2:
-				{
-				setState(20);
-				((ExprContext)_localctx).lhs = match(VARIABLE);
-				setState(21);
-				compop();
-				setState(22);
 				((ExprContext)_localctx).rhs = match(STRING);
 				}
 				break;
 			case 3:
 				{
-				setState(24);
+				setState(20);
 				match(TRUE);
 				}
 				break;
 			case 4:
 				{
-				setState(25);
+				setState(21);
 				match(FALSE);
 				}
 				break;
 			case 5:
 				{
-				setState(26);
+				setState(22);
 				match(VARIABLE);
 				}
 				break;
 			case 6:
 				{
-				setState(27);
-				startofexpr();
-				setState(28);
+				setState(23);
+				match(LEFTPAREN);
+				setState(24);
 				expr(0);
-				setState(29);
-				endofexpr();
+				setState(25);
+				match(RIGHTPAREN);
 				}
 				break;
 			}
 			_ctx.stop = _input.LT(-1);
-			setState(39);
+			setState(35);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,1,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
@@ -255,16 +250,16 @@ public class BusinessRuleParser extends Parser {
 					{
 					_localctx = new ExprContext(_parentctx, _parentState);
 					pushNewRecursionContext(_localctx, _startState, RULE_expr);
-					setState(33);
+					setState(29);
 					if (!(precpred(_ctx, 7))) throw new FailedPredicateException(this, "precpred(_ctx, 7)");
-					setState(34);
+					setState(30);
 					binop();
-					setState(35);
+					setState(31);
 					expr(8);
 					}
 					} 
 				}
-				setState(41);
+				setState(37);
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,1,_ctx);
 			}
@@ -310,7 +305,7 @@ public class BusinessRuleParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(42);
+			setState(38);
 			_la = _input.LA(1);
 			if ( !(_la==AND || _la==OR) ) {
 			_errHandler.recoverInline(this);
@@ -363,97 +358,13 @@ public class BusinessRuleParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(44);
+			setState(40);
 			_la = _input.LA(1);
 			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << EQUAL) | (1L << LT) | (1L << GT) | (1L << LTE) | (1L << GTE) | (1L << NE))) != 0)) ) {
 			_errHandler.recoverInline(this);
 			} else {
 				consume();
 			}
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
-		}
-		finally {
-			exitRule();
-		}
-		return _localctx;
-	}
-
-	public static class StartofexprContext extends ParserRuleContext {
-		public TerminalNode LEFTPAREN() { return getToken(BusinessRuleParser.LEFTPAREN, 0); }
-		public StartofexprContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_startofexpr; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof BusinessRuleListener ) ((BusinessRuleListener)listener).enterStartofexpr(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof BusinessRuleListener ) ((BusinessRuleListener)listener).exitStartofexpr(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof BusinessRuleVisitor ) return ((BusinessRuleVisitor<? extends T>)visitor).visitStartofexpr(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-
-	public final StartofexprContext startofexpr() throws RecognitionException {
-		StartofexprContext _localctx = new StartofexprContext(_ctx, getState());
-		enterRule(_localctx, 8, RULE_startofexpr);
-		try {
-			enterOuterAlt(_localctx, 1);
-			{
-			setState(46);
-			match(LEFTPAREN);
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
-		}
-		finally {
-			exitRule();
-		}
-		return _localctx;
-	}
-
-	public static class EndofexprContext extends ParserRuleContext {
-		public TerminalNode RIGHTPAREN() { return getToken(BusinessRuleParser.RIGHTPAREN, 0); }
-		public EndofexprContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_endofexpr; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof BusinessRuleListener ) ((BusinessRuleListener)listener).enterEndofexpr(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof BusinessRuleListener ) ((BusinessRuleListener)listener).exitEndofexpr(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof BusinessRuleVisitor ) return ((BusinessRuleVisitor<? extends T>)visitor).visitEndofexpr(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-
-	public final EndofexprContext endofexpr() throws RecognitionException {
-		EndofexprContext _localctx = new EndofexprContext(_ctx, getState());
-		enterRule(_localctx, 10, RULE_endofexpr);
-		try {
-			enterOuterAlt(_localctx, 1);
-			{
-			setState(48);
-			match(RIGHTPAREN);
 			}
 		}
 		catch (RecognitionException re) {
@@ -483,20 +394,19 @@ public class BusinessRuleParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\21\65\4\2\t\2\4\3"+
-		"\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\3\2\3\2\3\2\3\3\3\3\3\3\3\3\3\3\3"+
-		"\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\5\3\"\n\3\3\3\3\3\3\3\3\3\7"+
-		"\3(\n\3\f\3\16\3+\13\3\3\4\3\4\3\5\3\5\3\6\3\6\3\7\3\7\3\7\2\3\4\b\2\4"+
-		"\6\b\n\f\2\4\3\2\16\17\3\2\b\r\64\2\16\3\2\2\2\4!\3\2\2\2\6,\3\2\2\2\b"+
-		".\3\2\2\2\n\60\3\2\2\2\f\62\3\2\2\2\16\17\5\4\3\2\17\20\7\2\2\3\20\3\3"+
-		"\2\2\2\21\22\b\3\1\2\22\23\7\20\2\2\23\24\5\b\5\2\24\25\7\20\2\2\25\""+
-		"\3\2\2\2\26\27\7\20\2\2\27\30\5\b\5\2\30\31\7\5\2\2\31\"\3\2\2\2\32\""+
-		"\7\3\2\2\33\"\7\4\2\2\34\"\7\20\2\2\35\36\5\n\6\2\36\37\5\4\3\2\37 \5"+
-		"\f\7\2 \"\3\2\2\2!\21\3\2\2\2!\26\3\2\2\2!\32\3\2\2\2!\33\3\2\2\2!\34"+
-		"\3\2\2\2!\35\3\2\2\2\")\3\2\2\2#$\f\t\2\2$%\5\6\4\2%&\5\4\3\n&(\3\2\2"+
-		"\2\'#\3\2\2\2(+\3\2\2\2)\'\3\2\2\2)*\3\2\2\2*\5\3\2\2\2+)\3\2\2\2,-\t"+
-		"\2\2\2-\7\3\2\2\2./\t\3\2\2/\t\3\2\2\2\60\61\7\6\2\2\61\13\3\2\2\2\62"+
-		"\63\7\7\2\2\63\r\3\2\2\2\4!)";
+		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\21-\4\2\t\2\4\3\t"+
+		"\3\4\4\t\4\4\5\t\5\3\2\3\2\3\2\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3"+
+		"\3\3\3\3\3\3\3\3\3\3\3\3\5\3\36\n\3\3\3\3\3\3\3\3\3\7\3$\n\3\f\3\16\3"+
+		"\'\13\3\3\4\3\4\3\5\3\5\3\5\2\3\4\6\2\4\6\b\2\4\3\2\16\17\3\2\b\r.\2\n"+
+		"\3\2\2\2\4\35\3\2\2\2\6(\3\2\2\2\b*\3\2\2\2\n\13\5\4\3\2\13\f\7\2\2\3"+
+		"\f\3\3\2\2\2\r\16\b\3\1\2\16\17\7\20\2\2\17\20\5\b\5\2\20\21\7\20\2\2"+
+		"\21\36\3\2\2\2\22\23\7\20\2\2\23\24\5\b\5\2\24\25\7\5\2\2\25\36\3\2\2"+
+		"\2\26\36\7\3\2\2\27\36\7\4\2\2\30\36\7\20\2\2\31\32\7\6\2\2\32\33\5\4"+
+		"\3\2\33\34\7\7\2\2\34\36\3\2\2\2\35\r\3\2\2\2\35\22\3\2\2\2\35\26\3\2"+
+		"\2\2\35\27\3\2\2\2\35\30\3\2\2\2\35\31\3\2\2\2\36%\3\2\2\2\37 \f\t\2\2"+
+		" !\5\6\4\2!\"\5\4\3\n\"$\3\2\2\2#\37\3\2\2\2$\'\3\2\2\2%#\3\2\2\2%&\3"+
+		"\2\2\2&\5\3\2\2\2\'%\3\2\2\2()\t\2\2\2)\7\3\2\2\2*+\t\3\2\2+\t\3\2\2\2"+
+		"\4\35%";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

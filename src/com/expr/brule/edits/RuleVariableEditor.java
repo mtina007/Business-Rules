@@ -27,7 +27,6 @@ public class RuleVariableEditor extends RuleEditSupport {
 		
 		if(ctx.compop()!=null){
 			String lhs = ctx.lhs.getText();
-			//System.out.println("lhs: "+lhs);
 			if(this.replaceMap.containsKey(lhs)){
 				this.rw.replace(ctx.lhs, " "+this.replaceMap.get(lhs)+" ");
 			}

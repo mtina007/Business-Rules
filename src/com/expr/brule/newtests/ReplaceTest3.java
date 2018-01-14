@@ -2,10 +2,8 @@ package com.expr.brule.newtests;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import com.expr.brule.edits.MultiRuleEditor;
-import com.expr.brule.edits.RuleVariableEditor;
 
 public class ReplaceTest3 {
 
@@ -24,14 +22,6 @@ public class ReplaceTest3 {
 			e1.printStackTrace();
 		}
 		
-		RuleVariableEditor exp = new RuleVariableEditor(rule, "AMOUNT", "CASH");
-		
-		try {
-			exp.parseRule();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
 	}
 
 }

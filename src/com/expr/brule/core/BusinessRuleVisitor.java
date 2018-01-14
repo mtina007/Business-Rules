@@ -34,16 +34,4 @@ public interface BusinessRuleVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitCompop(BusinessRuleParser.CompopContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link BusinessRuleParser#startofexpr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitStartofexpr(BusinessRuleParser.StartofexprContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link BusinessRuleParser#endofexpr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitEndofexpr(BusinessRuleParser.EndofexprContext ctx);
 }

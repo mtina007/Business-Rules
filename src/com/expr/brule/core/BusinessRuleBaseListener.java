@@ -59,30 +59,6 @@ public class BusinessRuleBaseListener implements BusinessRuleListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitCompop(BusinessRuleParser.CompopContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterStartofexpr(BusinessRuleParser.StartofexprContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitStartofexpr(BusinessRuleParser.StartofexprContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterEndofexpr(BusinessRuleParser.EndofexprContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitEndofexpr(BusinessRuleParser.EndofexprContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

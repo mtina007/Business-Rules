@@ -47,24 +47,4 @@ public interface BusinessRuleListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitCompop(BusinessRuleParser.CompopContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link BusinessRuleParser#startofexpr}.
-	 * @param ctx the parse tree
-	 */
-	void enterStartofexpr(BusinessRuleParser.StartofexprContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link BusinessRuleParser#startofexpr}.
-	 * @param ctx the parse tree
-	 */
-	void exitStartofexpr(BusinessRuleParser.StartofexprContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link BusinessRuleParser#endofexpr}.
-	 * @param ctx the parse tree
-	 */
-	void enterEndofexpr(BusinessRuleParser.EndofexprContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link BusinessRuleParser#endofexpr}.
-	 * @param ctx the parse tree
-	 */
-	void exitEndofexpr(BusinessRuleParser.EndofexprContext ctx);
 }

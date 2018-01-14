@@ -1,25 +1,27 @@
 /**
  * 
  */
-package com.expr.brule.editing;
+package com.expr.brule.edits;
 
 import java.util.ArrayList;
 
-import com.expr.brule.core.BusinessRuleBaseListener;
+import com.expr.brule.common.ParseWrapper;
 import com.expr.brule.core.BusinessRuleParser.BinopContext;
 import com.expr.brule.core.BusinessRuleParser.ExprContext;
+import com.expr.brule.editing.RangeData;
 
 /**
  * @author ssdImmanuel
  *
  */
-public class RuleColoringData extends BusinessRuleBaseListener {
+public class RuleColoringData extends ParseWrapper {
 
 	/**
 	 * 
 	 */
 	private ArrayList<RangeData> tokenranges= new ArrayList<RangeData>();
-	public RuleColoringData() {
+	public RuleColoringData(String rule) {
+		super(rule);
 	}
 
 	@Override
@@ -37,10 +39,16 @@ public class RuleColoringData extends BusinessRuleBaseListener {
 	@Override
 	public void enterExpr(ExprContext ctx) {
 		if(ctx.compop()!=null){
+			RangeData data = new RangeData();
+			data.tokenStart = ctx.compop().start.getStartIndex();
+			data.tokenLength= ctx.compop().getText().length();
+			
+			data.tokenType = ctx.compop().start.getType();
+			this.tokenranges.add(data);
 			if(ctx.STRING()==null){
 				return;
 			}
-			RangeData data = new RangeData();
+			data = new RangeData();
 			data.tokenStart = ctx.rhs.getStartIndex();
 			data.tokenLength= ctx.rhs.getText().length();
 			

@@ -18,6 +18,8 @@ import com.expr.brule.core.BusinessRuleParser;
 import com.expr.brule.core.BusinessRuleParser.ParseContext;
 
 /**
+ * Base class which provides parse and AST Walk feature for 
+ * a business rule
  * @author ssdImmanuel
  *
  */
@@ -27,6 +29,7 @@ public class ParseWrapper extends BusinessRuleBaseListener{
 	 * 
 	 */
 	protected TokenStreamRewriter rw;
+	protected BusinessRuleParser parser;
 	
 	private String rule;
 	public ParseWrapper(String rule) {
@@ -37,14 +40,11 @@ public class ParseWrapper extends BusinessRuleBaseListener{
 		CharStream stream = new ANTLRInputStream(new StringReader(rule));
 		BusinessRuleLexer lexer = new BusinessRuleLexer(stream);
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
-		BusinessRuleParser parser = new BusinessRuleParser(tokens);
+		parser = new BusinessRuleParser(tokens);
 		
 		rw = new TokenStreamRewriter(tokens);
-		
 		ParseContext ctx = parser.parse();
-		
 		ParseTreeWalker.DEFAULT.walk(this, ctx);
-		
 	}
 	
 	public String getLatestRule() {

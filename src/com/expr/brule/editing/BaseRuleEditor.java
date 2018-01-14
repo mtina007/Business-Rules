@@ -11,9 +11,7 @@ import org.antlr.v4.runtime.TokenStreamRewriter;
 import com.expr.brule.core.BusinessRuleBaseListener;
 import com.expr.brule.core.BusinessRuleParser.BinopContext;
 import com.expr.brule.core.BusinessRuleParser.CompopContext;
-import com.expr.brule.core.BusinessRuleParser.EndofexprContext;
 import com.expr.brule.core.BusinessRuleParser.ExprContext;
-import com.expr.brule.core.BusinessRuleParser.StartofexprContext;
 
 /**
  * @author ssdImmanuel
@@ -58,17 +56,6 @@ public class BaseRuleEditor extends BusinessRuleBaseListener {
 
 	@Override
 	public void enterCompop(CompopContext ctx) {
-		rw.replace(ctx.start, " " + ctx.getText() + " ");
-	}
-
-	
-	@Override
-	public void enterEndofexpr(EndofexprContext ctx) {
-		rw.replace(ctx.start, " " + ctx.getText() + " ");
-	}
-
-	@Override
-	public void enterStartofexpr(StartofexprContext ctx) {
 		rw.replace(ctx.start, " " + ctx.getText() + " ");
 	}
 
