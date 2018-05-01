@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import com.expr.brule.common.ParseWrapper;
 import com.expr.brule.core.BusinessRuleParser.BinopContext;
 import com.expr.brule.core.BusinessRuleParser.ExprContext;
+import com.expr.brule.core.BusinessRuleParser.StringExpressionContext;
 import com.expr.brule.editing.RangeData;
 
 /**
@@ -34,10 +35,9 @@ public class RuleColoringData extends ParseWrapper {
 		data.tokenType = ctx.start.getType();
 		this.tokenranges.add(data);
 	}
-
 	
 	@Override
-	public void enterExpr(ExprContext ctx) {
+	public void enterStringExpression(StringExpressionContext ctx) {
 		if(ctx.compop()!=null){
 			RangeData data = new RangeData();
 			data.tokenStart = ctx.compop().start.getStartIndex();
@@ -56,6 +56,7 @@ public class RuleColoringData extends ParseWrapper {
 			this.tokenranges.add(data);
 		}
 	}
+
 
 	public ArrayList<RangeData> getTokenranges() {
 		return tokenranges;

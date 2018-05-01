@@ -1,7 +1,6 @@
 package com.expr.brule.newtests;
 
 import java.io.IOException;
-import java.util.HashMap;
 
 import com.expr.brule.edits.RuleVariableEditor;
 

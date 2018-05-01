@@ -4,10 +4,9 @@
 package com.expr.brule.common;
 
 import java.io.IOException;
-import java.io.StringReader;
 
-import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CharStream;
+import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.TokenStreamRewriter;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
@@ -37,10 +36,15 @@ public class ParseWrapper extends BusinessRuleBaseListener{
 	}
 	
 	public void parseRule() throws IOException{
-		CharStream stream = new ANTLRInputStream(new StringReader(rule));
+		CharStream stream = CharStreams.fromString(rule);
 		BusinessRuleLexer lexer = new BusinessRuleLexer(stream);
+		//lexer.removeErrorListeners();
+		//lexer.addErrorListener(ThrowingErrorListener.INSTANCE);
+		
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
 		parser = new BusinessRuleParser(tokens);
+		//parser.removeErrorListeners();
+		//parser.addErrorListener(ThrowingErrorListener.INSTANCE);
 		
 		rw = new TokenStreamRewriter(tokens);
 		ParseContext ctx = parser.parse();

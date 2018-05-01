@@ -8,7 +8,10 @@ import org.antlr.v4.runtime.TokenStreamRewriter;
 
 import com.expr.brule.core.BusinessRuleParser.BinopContext;
 import com.expr.brule.core.BusinessRuleParser.ExprContext;
+import com.expr.brule.core.BusinessRuleParser.NumberExpressionContext;
 import com.expr.brule.core.BusinessRuleParser.ParseContext;
+import com.expr.brule.core.BusinessRuleParser.StringExpressionContext;
+import com.expr.brule.core.BusinessRuleParser.VariableExpressionContext;
 
 /**
  * @author ssdImmanuel
@@ -31,12 +34,21 @@ public class RuleExpCounter extends BusinessRuleBaseListener {
 	}
 
 	@Override
-	public void enterExpr(ExprContext ctx) {
-		if(ctx.compop()!=null){
-			this.expressionCounter++;
-		}
+	public void enterStringExpression(StringExpressionContext ctx) {
+		expressionCounter++;
 	}
+
+	@Override
+	public void enterVariableExpression(VariableExpressionContext ctx) {
+		expressionCounter++;
+	}
+
 	
+	@Override
+	public void enterNumberExpression(NumberExpressionContext ctx) {
+		expressionCounter++;
+	}
+
 	@Override
 	public void enterBinop(BinopContext ctx) {
 		this.setBooleanOpCount(this.getBooleanOpCount() + 1);
@@ -57,7 +69,5 @@ public class RuleExpCounter extends BusinessRuleBaseListener {
 	public void setBooleanOpCount(int booleanOpCount) {
 		this.booleanOpCount = booleanOpCount;
 	}
-	
-	
 
 }

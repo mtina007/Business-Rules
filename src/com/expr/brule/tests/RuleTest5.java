@@ -9,15 +9,14 @@ public class RuleTest5 {
 
 	public static void main(String[] args) throws Exception {
 
-		String rule = "( ( IND1 = Y)  OR ( IND2 = Y ) )";
+		String rule = "( ( IND1 = 1)  OR ( IND2 > 2 ) )";
 		
-		//rule = "( IND1 = Y OR (IND2 = N)";
 		
 		System.out.println("Input rule: "+rule);
 		
 		HashMap values = new HashMap();
-		values.put("IND1", "Y");
-		values.put("IND2", "Y");
+		values.put("IND1", 1.0);
+		values.put("IND2", 22.1);
 		
 		ExecutionEngine eng = new ExecutionEngine(rule, values);
 		eng.evaluate();

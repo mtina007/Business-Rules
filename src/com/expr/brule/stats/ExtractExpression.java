@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 import com.expr.brule.common.ParseWrapper;
 import com.expr.brule.core.BusinessRuleParser.ExprContext;
+import com.expr.brule.core.BusinessRuleParser.NumberExpressionContext;
+import com.expr.brule.core.BusinessRuleParser.StringExpressionContext;
+import com.expr.brule.core.BusinessRuleParser.VariableExpressionContext;
 
 public class ExtractExpression extends ParseWrapper {
 
@@ -24,15 +27,33 @@ public class ExtractExpression extends ParseWrapper {
 	}
 
 	@Override
-	public void enterExpr(ExprContext ctx) {
-		if(ctx.compop()!=null) {
-			RuleExpression exp = new RuleExpression();
-			exp.lhs = ctx.lhs.getText();
-			exp.operator = ctx.compop().getText();
-			exp.rhs = ctx.rhs.getText();
-			expressions.add(exp);
-		}
+	public void enterStringExpression(StringExpressionContext ctx) {
+		RuleExpression exp = new RuleExpression();
+		exp.lhs = ctx.lhs.getText();
+		exp.operator = ctx.compop().getText();
+		exp.rhs = ctx.rhs.getText();
+		expressions.add(exp);
 	}
+
+	@Override
+	public void enterNumberExpression(NumberExpressionContext ctx) {
+		RuleExpression exp = new RuleExpression();
+		exp.lhs = ctx.lhs.getText();
+		exp.operator = ctx.compop().getText();
+		exp.rhs = ctx.rhs.getText();
+		expressions.add(exp);
+	}
+
+	@Override
+	public void enterVariableExpression(VariableExpressionContext ctx) {
+		RuleExpression exp = new RuleExpression();
+		exp.lhs = ctx.lhs.getText();
+		exp.operator = ctx.compop().getText();
+		exp.rhs = ctx.rhs.getText();
+		expressions.add(exp);
+	}
+
+	
 	
 	
 }

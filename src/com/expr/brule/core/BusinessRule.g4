@@ -3,54 +3,45 @@
  */
 
 grammar BusinessRule;
+@header{
+package com.expr.brule.core;
+}
 
-parse
- : expr EOF
+parse: expr EOF
+	;
+
+expr	
+ : expr binop expr  				#logicalExpression
+ | lhs=VARIABLE compop rhs=VARIABLE #variableExpression
+ | lhs=VARIABLE compop rhs=STRING 	#stringExpression
+ | lhs=VARIABLE compop rhs=NUMBER 	#numberExpression
+ | TRUE         					#booleanTrue
+ | FALSE        					#booleanFalse
+ | VARIABLE     					#booleanVariable
+ | LEFTPAREN expr RIGHTPAREN 		#enclosedExpression
  ;
 
-
-expr
- : expr binop expr  
- | lhs=VARIABLE compop rhs=VARIABLE 
- | lhs=VARIABLE compop rhs=STRING 
- | TRUE         
- | FALSE        
- | VARIABLE     
- | LEFTPAREN expr RIGHTPAREN 
- 
+binop : AND | OR 
  ;
 
-binop
- : AND | OR 
- ;
-
-compop:
-          EQUAL | LT | GT | LTE | GTE | NE
+compop: EQUAL | LT | GT | LTE | GTE | NE
       ;
           
-
-TRUE:
-        'true' | 'TRUE'
-    ;
-
-FALSE:
-         'false' | 'FALSE';
-STRING:
-          '"'   ~[\t\n\r\"]* '"' 
+TRUE:       'true' | 'TRUE'  ;
+FALSE:      'false' | 'FALSE';
+STRING:     '"'   ~([\t\n\r]| '"')* '"'
      ;
      
-     //startofexpr:	LEFTPAREN;
-     //endofexpr:		RIGHTPAREN;
-
 LEFTPAREN:	'(';   
 RIGHTPAREN:	')';  
 EQUAL     : '=' | 'EQ';
 LT        : '<' | 'LT';
 GT        : '>' | 'GT';
-LTE       : '<=';
-GTE       : '>=';
+LTE       : '<=' | 'LE';
+GTE       : '>=' | 'GE';
 NE        : '!=' | 'NE';
 AND       : 'AND' | '&' | 'and';
 OR        : 'OR' | 'or' | '|';
-VARIABLE  : [a-zA-Z0-9_.-]+;
+VARIABLE  : [a-zA-Z]+[a-zA-Z0-9_.-]*;
+NUMBER	: [0-9]+ ('.'[0-9]+)?;
 SPACE     : [ \t\r\n] -> skip;

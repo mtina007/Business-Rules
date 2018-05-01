@@ -11,7 +11,6 @@ import com.expr.brule.core.BusinessRuleLexer;
 import com.expr.brule.core.BusinessRuleParser;
 import com.expr.brule.core.RuleExpCounter;
 import com.expr.brule.core.BusinessRuleParser.ParseContext;
-import com.expr.brule.editing.BaseRuleEditor;
 
 public class RuleTest {
 
@@ -34,11 +33,6 @@ public class RuleTest {
 		double pow2 = Math.pow(2, ecnt);
 		
 		System.out.println("Truth table has "+pow2+" entries" );
-		
-		BaseRuleEditor editor = new BaseRuleEditor(tokens);
-		ParseTreeWalker.DEFAULT.walk(editor, ctx);
-		
-		System.out.println("Edited rule: "+editor.getEditedRule());
 		
 	}
 

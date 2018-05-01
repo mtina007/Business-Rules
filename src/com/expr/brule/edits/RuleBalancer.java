@@ -4,7 +4,11 @@
 package com.expr.brule.edits;
 
 import com.expr.brule.common.ParseWrapper;
-import com.expr.brule.core.BusinessRuleParser.ExprContext;
+import com.expr.brule.core.BusinessRuleParser.EnclosedExpressionContext;
+import com.expr.brule.core.BusinessRuleParser.LogicalExpressionContext;
+import com.expr.brule.core.BusinessRuleParser.NumberExpressionContext;
+import com.expr.brule.core.BusinessRuleParser.StringExpressionContext;
+import com.expr.brule.core.BusinessRuleParser.VariableExpressionContext;
 
 /**
  * @author ssdImmanuel
@@ -18,52 +22,82 @@ public class RuleBalancer extends ParseWrapper {
 	public RuleBalancer(String rule) {
 		super(rule);
 	}
-	
-	private int openInsertCount=0;
-	private int closeInsertCount=0;
-	
+
+	private int openInsertCount = 0;
+	private int closeInsertCount = 0;
+
 	@Override
-	public void enterExpr(ExprContext ctx) {
-		if(ctx.compop()!=null) {
-			//System.out.println(""+ctx.getParent().getClass());
-			
-			ExprContext par = (ExprContext) ctx.getParent();
-			
-			if(par.LEFTPAREN()==null) {
-				rw.insertBefore(ctx.start, " ( ");
-				openInsertCount++;
-			}else {
-				rw.replace(par.start, " ( ");
-			}
-			
-			if(par.RIGHTPAREN()==null) {
-				rw.insertAfter(ctx.stop, " ) ");
-				closeInsertCount++;
-			}else {
-				rw.replace(par.stop, " ) ");
-			}
+	public void enterEnclosedExpression(EnclosedExpressionContext ctx) {
+		if (!ctx.start.getText().equals("(")) {
+			rw.insertBefore(ctx.start, " ( ");
+			openInsertCount++;
 		}
-		
-		if(ctx.binop()!=null) {
-			//System.out.println(""+ctx.getParent().getClass());
-			
-			ExprContext par = (ExprContext) ctx.getParent();
-			
-			if(par.LEFTPAREN()==null) {
-				rw.insertBefore(ctx.start, " ( ");
-				openInsertCount++;
-			}else {
-				rw.replace(par.start, " ( ");
-			}
-			
-			if(par.RIGHTPAREN()==null) {
-				rw.insertAfter(ctx.stop, " ) ");
-				closeInsertCount++;
-			}else {
-				rw.replace(par.stop, " ) ");
-			}
+
+		if (!ctx.stop.getText().equals(")")) {
+			rw.insertAfter(ctx.stop, " ) ");
+			closeInsertCount++;
 		}
-		
+	}
+
+	@Override
+	public void enterLogicalExpression(LogicalExpressionContext ctx) {
+		System.out.println("" + ctx.getParent().getClass());
+		System.out.println(ctx.getText());
+		if (ctx.getParent() instanceof EnclosedExpressionContext) {
+			return;
+		}
+		rw.insertBefore(ctx.start, " ( ");
+		openInsertCount++;
+		rw.insertAfter(ctx.stop, " ) ");
+		closeInsertCount++;
+	}
+
+	@Override
+	public void enterVariableExpression(VariableExpressionContext ctx) {
+		if (ctx.getParent() instanceof EnclosedExpressionContext) {
+			return;
+		}
+		if (!ctx.start.getText().equals("(")) {
+			rw.insertBefore(ctx.start, " ( ");
+			openInsertCount++;
+		}
+
+		if (!ctx.stop.getText().equals(")")) {
+			rw.insertAfter(ctx.stop, " ) ");
+			closeInsertCount++;
+		}
+	}
+
+	@Override
+	public void enterStringExpression(StringExpressionContext ctx) {
+		if (ctx.getParent() instanceof EnclosedExpressionContext) {
+			return;
+		}
+		if (!ctx.start.getText().equals("(")) {
+			rw.insertBefore(ctx.start, " ( ");
+			openInsertCount++;
+		}
+
+		if (!ctx.stop.getText().equals(")")) {
+			rw.insertAfter(ctx.stop, " ) ");
+			closeInsertCount++;
+		}
+	}
+
+	@Override
+	public void enterNumberExpression(NumberExpressionContext ctx) {
+		if (ctx.getParent() instanceof EnclosedExpressionContext) {
+			return;
+		}
+		if (!ctx.start.getText().equals("(")) {
+			rw.insertBefore(ctx.start, " ( ");
+			openInsertCount++;
+		}
+
+		if (!ctx.stop.getText().equals(")")) {
+			rw.insertAfter(ctx.stop, " ) ");
+			closeInsertCount++;
+		}
 	}
 
 	public int getOpenInsertCount() {
